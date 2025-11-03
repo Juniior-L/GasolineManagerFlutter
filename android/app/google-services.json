@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "351592891493",
+    "project_id": "gasolinemanager-b9949",
+    "storage_bucket": "gasolinemanager-b9949.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351592891493:android:12f6ccb66e3273e3ecf28c",
+        "android_client_info": {
+          "package_name": "com.example.atividade_prova"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4HbJ6zHukJuSEdm8CJoSk7FVIbeBQHNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
