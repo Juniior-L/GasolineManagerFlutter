@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class MeuDrawer extends Drawer {
-  MeuDrawer({super.key});
+  const MeuDrawer({super.key});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
+            decoration: BoxDecoration(color: const Color.fromARGB(255, 71, 0, 202)),
             child: Text(
               'Menu',
               style: TextStyle(color: Colors.white, fontSize: 24),

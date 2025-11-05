@@ -38,4 +38,10 @@ class AuthService {
   }
 
   User? get currentUser => _auth.currentUser;
+
+  String getUserId() {
+    final user = _auth.currentUser;
+    if (user == null) throw Exception("Usuário não autenticado");
+    return user.uid;
+  }
 }

@@ -1,10 +1,10 @@
 import 'package:atividade_prova/viewmodels/auth_viewmodel.dart';
+import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
-// Import das páginas
 import 'ui/pages/login_page.dart';
 import 'ui/pages/signup_page.dart';
 import 'ui/pages/home_page.dart';
@@ -20,8 +20,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => AuthViewModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => RefuelViewmodel()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Gasoline Manager',
