@@ -3,69 +3,48 @@ import 'package:atividade_prova/data/services/auth_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class RefuelDao {
-  final database = FirebaseDatabase.instance;
+  final _database = FirebaseDatabase.instance.ref();
   final _auth = AuthService();
 
-  String get user => _auth.getUserId();
+  String get _userId => _auth.getUserId();
 
-  
+  DatabaseReference get _userRef =>
+      _database.child('users').child(_userId).child('refuels');
 
-  Future<void> save(Refuel r) async {
-    final ref = database.ref('refuels').push();
-    await ref.set(r.toMap());
-    print("dados salvos");
+  Future<void> save(Refuel refuel) async {
+    await _userRef.push().set(refuel.toMap());
+    print(" Abastecimento salvo para usuário $_userId");
   }
 
-  Future<void> edit(String id, Refuel r) async {
-    final ref = database.ref('refuels/$id');
-    await ref.update(r.toMap());
-    print("dados editados");
+  Future<void> edit(String id, Refuel refuel) async {
+    await _userRef.child(id).update(refuel.toMap());
   }
 
   Future<void> remove(String id) async {
-    final ref = database.ref('refuels/$id');
-    await ref.remove();
+    await _userRef.child(id).remove();
   }
 
   Future<List<Refuel>> show() async {
-    final ref = database.ref('refuels');
-    final event = await ref.once();
+    final snapshot = await _userRef.get();
+    if (!snapshot.exists) return [];
 
-    List<Refuel> list = [];
-
-    if (event.snapshot.value != null) {
-      final map = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
-      map.forEach((key, value) {
-        final data = Map<String, dynamic>.from(value as Map);
-        data['id'] = key;
-        list.add(Refuel.fromMap(data));
-      });
-    }
-    return list;
+    final data = Map<String, dynamic>.from(snapshot.value as Map);
+    return data.entries.map((entry) {
+      final value = Map<String, dynamic>.from(entry.value);
+      value['id'] = entry.key;
+      return Refuel.fromMap(value);
+    }).toList();
   }
 
   Stream<List<Refuel>> getRefuelStream() {
-    final ref = database.ref('refuels');
-    return ref.onValue.map((event) {
-      final list = <Refuel>[];
-      if (event.snapshot.value != null) {
-        final map = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
-        map.forEach((key, value) {
-          final data = Map<String, dynamic>.from(value as Map);
-          data['id'] = key;
-          list.add(Refuel.fromMap(data));
-        });
-      }
-      return list;
-    });
-  }
-
-  void listenData() {
-    DatabaseReference ref = database.ref('refuels');
-    ref.onValue.listen((DatabaseEvent event) {
-      if (event.snapshot.exists) {
-        print('Dados atualizados: ${event.snapshot.value}');
-      }
+    return _userRef.onValue.map((event) {
+      if (event.snapshot.value == null) return [];
+      final data = Map<String, dynamic>.from(event.snapshot.value as Map);
+      return data.entries.map((entry) {
+        final value = Map<String, dynamic>.from(entry.value);
+        value['id'] = entry.key;
+        return Refuel.fromMap(value);
+      }).toList();
     });
   }
 }

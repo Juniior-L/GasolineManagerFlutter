@@ -21,8 +21,8 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              authVM.signOut();
+            onPressed: () async {
+              await authVM.signOut();
               Navigator.pushReplacementNamed(context, '/login');
             },
           ),
@@ -41,14 +41,50 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          vehicleVM.save("Ranger", "QAR-3765", "2019", "Diesel-S10");
-          refuelVM.save("jujuga2s", 234.20, 27.2, "20/10");
-          // refuelVM.remove("-OdJW367IwK6zGH6NPtS");
-          // aqui vai abrir tela de novo abastecimento
-        },
         child: const Icon(Icons.add),
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            builder: (context) {
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListTile(
+                      leading: const Icon(
+                        Icons.directions_car,
+                        color: Color.fromARGB(255, 166, 33, 243),
+                      ),
+                      title: const Text("Adicionar Veículo"),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/newVehicle');
+                      },
+                    ),
+                    const Divider(),
+                    ListTile(
+                      leading: const Icon(
+                        Icons.local_gas_station,
+                        color: Color.fromARGB(255, 130, 76, 175),
+                      ),
+                      title: const Text("Novo Abastecimento"),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/novoAbastecimento');
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

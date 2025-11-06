@@ -1,3 +1,4 @@
+import 'package:atividade_prova/ui/pages/new_vehicle_page.dart';
 import 'package:atividade_prova/viewmodels/auth_viewmodel.dart';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           '/login': (_) => const LoginPage(),
           '/signup': (_) => const SignupPage(),
           '/home': (_) => const HomePage(),
+          '/newVehicle': (_) => const NewVehiclePage(),
         },
       ),
     );

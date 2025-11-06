@@ -1,5 +1,6 @@
 class Refuel {
   String? id;
+  // final String? vehicleId;
   String gasStation;
   double value;
   double liters;
@@ -7,6 +8,7 @@ class Refuel {
 
   Refuel({
     this.id,
+  
     required this.gasStation,
     required this.value,
     required this.liters,
