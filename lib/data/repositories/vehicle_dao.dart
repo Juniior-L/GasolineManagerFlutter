@@ -1,6 +1,5 @@
 import 'package:atividade_prova/data/models/vehicle_model.dart';
 import 'package:atividade_prova/data/repositories/base_dao.dart';
-import 'package:atividade_prova/data/services/auth_service.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class VehicleDao extends BaseDao {

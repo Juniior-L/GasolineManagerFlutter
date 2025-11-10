@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: SpeedDial(
         icon: Icons.add,
         activeIcon: Icons.close,
-        backgroundColor: const Color.fromARGB(255, 71, 0, 202),
+        backgroundColor: const Color.from(alpha: 1, red: 0.278, green: 0, blue: 0.792),
         children: [
           SpeedDialChild(
             child: const Icon(Icons.directions_car),

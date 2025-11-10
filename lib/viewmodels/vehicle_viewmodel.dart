@@ -35,6 +35,7 @@ class VehicleViewmodel extends ChangeNotifier {
     if (!isListening) return;
     print("🛑 Parando listener de veiculos...");
 
+    list.clear();
     _subscription?.cancel();
     _subscription = null;
     list = []; // limpa a lista pra UI também limpar

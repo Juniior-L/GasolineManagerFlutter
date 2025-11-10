@@ -1,5 +1,8 @@
+import 'package:atividade_prova/core/themes/theme.dart';
 import 'package:atividade_prova/ui/pages/new_refuel_page.dart';
 import 'package:atividade_prova/ui/pages/new_vehicle_page.dart';
+import 'package:atividade_prova/ui/pages/refuel_page.dart';
+import 'package:atividade_prova/ui/pages/vehicle_page.dart';
 import 'package:atividade_prova/ui/widgets/auth_wrapper.dart';
 import 'package:atividade_prova/viewmodels/auth_viewmodel.dart';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
@@ -32,8 +35,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Gasoline Manager',
-        theme: ThemeData(colorSchemeSeed: Colors.green, useMaterial3: true),
+        title: 'Gestor de Abastecimento',
+        theme: AppTheme.lightTheme,
         home: const AuthWrapper(),
         routes: {
           '/login': (_) => const LoginPage(),
@@ -42,6 +45,8 @@ class MyApp extends StatelessWidget {
           '/newVehicle': (_) => const NewVehiclePage(),
           '/newRefuel': (_) => const NewRefuelPage(),
           '/authWrapper': (_) => const AuthWrapper(),
+          '/vehicleList': (_) => const VehicleListPage(),
+          '/refuelList': (_) => const RefuelListPage(),
         },
       ),
     );

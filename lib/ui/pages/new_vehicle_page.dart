@@ -1,5 +1,6 @@
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewVehiclePage extends StatefulWidget {
   const NewVehiclePage({super.key});
@@ -16,7 +17,7 @@ class _NewVehicleState extends State<NewVehiclePage> {
 
   @override
   Widget build(BuildContext context) {
-    final vehicleVM = VehicleViewmodel();
+    final vehicleVM = context.watch<VehicleViewmodel>();
 
     // if (authVM.currentUser != null) {
     //   // Use pushReplacement para evitar voltar ao login
@@ -58,12 +59,6 @@ class _NewVehicleState extends State<NewVehiclePage> {
                 );
               },
               child: Text("Criar"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/signup');
-              },
-              child: const Text('Criar conta'),
             ),
           ],
         ),

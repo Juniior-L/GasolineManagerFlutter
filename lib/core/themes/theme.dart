@@ -1,75 +1,95 @@
 import 'package:flutter/material.dart';
 
-ThemeData customTheme = ThemeData(
-  useMaterial3: true,
+class AppTheme {
+  // Paleta de cores moderna
+  static const Color primaryColor = Color(0xFF6A1B9A); // Roxo escuro elegante
+  static const Color accentColor = Color(0xFF8E24AA); // Roxo mais claro
+  static const Color backgroundColor = Color(
+    0xFFF5F5F5,
+  ); // Cinza claro de fundo
+  static const Color surfaceColor = Colors.white;
+  static const Color textPrimary = Colors.black87;
+  static const Color textSecondary = Colors.grey;
+  static const Color cardShadow = Color(0x11000000);
 
-  // 🎨 Esquema de cores principal
-  colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-
-  // 🧭 AppBar
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.teal,
-    foregroundColor: Colors.white,
-    elevation: 4,
-    centerTitle: true,
-  ),
-
-  // 🔘 Botão elevado (ex: Entrar)
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.teal,
-      foregroundColor: Colors.white,
-      minimumSize: const Size(double.infinity, 50),
-      textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: const ColorScheme.light(
+        primary: primaryColor,
+        secondary: accentColor,
+        background: backgroundColor,
+        surface: surfaceColor,
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+        onSurface: textPrimary,
       ),
-    ),
-  ),
+      scaffoldBackgroundColor: backgroundColor,
 
-  // ⭕ Botão contornado (ex: Cadastrar)
-  outlinedButtonTheme: OutlinedButtonThemeData(
-    style: OutlinedButton.styleFrom(
-      foregroundColor: Colors.teal.shade700,
-      side: BorderSide(color: Colors.teal.shade400, width: 1.5),
-      minimumSize: const Size(double.infinity, 50),
-      textStyle: const TextStyle(fontSize: 18),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+      // AppBar
+      appBarTheme: const AppBarTheme(
+        backgroundColor: primaryColor,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
-    ),
-  ),
 
-  // 🔤 Botão de texto (ex: Sair)
-  textButtonTheme: TextButtonThemeData(
-    style: TextButton.styleFrom(
-      foregroundColor: Colors.redAccent,
-      textStyle: const TextStyle(fontSize: 16),
-    ),
-  ),
+      // Textos
+      textTheme: const TextTheme(
+        bodyLarge: TextStyle(color: textPrimary, fontSize: 16),
+        bodyMedium: TextStyle(color: textSecondary, fontSize: 14),
+        titleLarge: TextStyle(
+          color: textPrimary,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+      ),
 
-  // 📝 Campos de texto
-  inputDecorationTheme: InputDecorationTheme(
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: Colors.grey.shade400),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: Colors.teal, width: 2),
-    ),
-    labelStyle: const TextStyle(color: Colors.black54),
-    prefixIconColor: Colors.teal,
-  ),
+      // Botões
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primaryColor,
+          foregroundColor: Colors.white,
+          textStyle: const TextStyle(fontWeight: FontWeight.bold),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+        ),
+      ),
 
-  // 🖋️ Estilo de texto global
-  textTheme: const TextTheme(
-    headlineMedium: TextStyle(
-      fontSize: 26,
-      fontWeight: FontWeight.bold,
-      color: Colors.black87,
-    ),
-    bodyMedium: TextStyle(fontSize: 16, color: Colors.black54),
-  ),
-);
+      // Floating Action Button
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: accentColor,
+        foregroundColor: Colors.white,
+      ),
+
+      // Cards
+      cardTheme: CardThemeData(
+        color: surfaceColor,
+        elevation: 2,
+        shadowColor: cardShadow,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+
+      // Campos de texto
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: Colors.white,
+        labelStyle: const TextStyle(color: textSecondary),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.grey),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: primaryColor, width: 2),
+        ),
+      ),
+    );
+  }
+}
