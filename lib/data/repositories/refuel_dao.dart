@@ -1,31 +1,36 @@
 import 'package:atividade_prova/data/models/refuel_model.dart';
-import 'package:atividade_prova/data/services/auth_service.dart';
+import 'package:atividade_prova/data/repositories/base_dao.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class RefuelDao {
-  final _database = FirebaseDatabase.instance.ref();
-  final _auth = AuthService();
-
-  String get _userId => _auth.getUserId();
-
-  DatabaseReference get _userRef =>
-      _database.child('users').child(_userId).child('refuels');
+class RefuelDao extends BaseDao {
+  DatabaseReference? get _refuelRef => childRef('refuels');
 
   Future<void> save(Refuel refuel) async {
-    await _userRef.push().set(refuel.toMap());
-    print(" Abastecimento salvo para usuário $_userId");
+    final ref = _refuelRef;
+    if (ref == null) return;
+    await ref.push().set(refuel.toMap());
+    print("✅ Abastecimento salvo para o usuário ${userId}");
   }
 
   Future<void> edit(String id, Refuel refuel) async {
-    await _userRef.child(id).update(refuel.toMap());
+    final ref = _refuelRef;
+    if (ref == null) return;
+    await ref.child(id).update(refuel.toMap());
+    print("✏️ Abastecimento $id atualizado!");
   }
 
   Future<void> remove(String id) async {
-    await _userRef.child(id).remove();
+    final ref = _refuelRef;
+    if (ref == null) return;
+    await ref.child(id).remove();
+    print("🗑️ Abastecimento $id removido!");
   }
 
   Future<List<Refuel>> show() async {
-    final snapshot = await _userRef.get();
+    final ref = _refuelRef;
+    if (ref == null) return [];
+
+    final snapshot = await ref.get();
     if (!snapshot.exists) return [];
 
     final data = Map<String, dynamic>.from(snapshot.value as Map);
@@ -37,7 +42,10 @@ class RefuelDao {
   }
 
   Stream<List<Refuel>> getRefuelStream() {
-    return _userRef.onValue.map((event) {
+    final ref = _refuelRef;
+    if (ref == null) return const Stream.empty();
+
+    return ref.onValue.map((event) {
       if (event.snapshot.value == null) return [];
       final data = Map<String, dynamic>.from(event.snapshot.value as Map);
       return data.entries.map((entry) {

@@ -1,8 +1,8 @@
 import 'package:atividade_prova/ui/widgets/drawer.dart';
 import 'package:atividade_prova/ui/widgets/header.dart';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
-import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import '../../viewmodels/auth_viewmodel.dart';
 
@@ -12,8 +12,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authVM = context.watch<AuthViewModel>();
-    final refuelVM = context.watch<RefuelViewmodel>();
-    final vehicleVM = VehicleViewmodel();
 
     return Scaffold(
       appBar: AppBar(
@@ -22,8 +20,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              await authVM.signOut();
-              Navigator.pushReplacementNamed(context, '/login');
+              await authVM.signOut(context);
             },
           ),
         ],
@@ -41,50 +38,22 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            ),
-            builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ListTile(
-                      leading: const Icon(
-                        Icons.directions_car,
-                        color: Color.fromARGB(255, 166, 33, 243),
-                      ),
-                      title: const Text("Adicionar Veículo"),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/newVehicle');
-                      },
-                    ),
-                    const Divider(),
-                    ListTile(
-                      leading: const Icon(
-                        Icons.local_gas_station,
-                        color: Color.fromARGB(255, 130, 76, 175),
-                      ),
-                      title: const Text("Novo Abastecimento"),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, '/novoAbastecimento');
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
+      floatingActionButton: SpeedDial(
+        icon: Icons.add,
+        activeIcon: Icons.close,
+        backgroundColor: const Color.fromARGB(255, 71, 0, 202),
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.directions_car),
+            label: 'Adicionar Veículo',
+            onTap: () => Navigator.pushNamed(context, '/newVehicle'),
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.local_gas_station),
+            label: 'Novo Abastecimento',
+            onTap: () => Navigator.pushNamed(context, '/newRefuel'),
+          ),
+        ],
       ),
     );
   }
@@ -133,7 +102,6 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildFuelList(BuildContext context) {
-    // aqui depois vamos trocar por um ListView.builder com dados reais
     final refuelVM = context.watch<RefuelViewmodel>();
 
     if (refuelVM.loading) {

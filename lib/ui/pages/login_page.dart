@@ -45,9 +45,9 @@ class _LoginPageState extends State<LoginPage> {
                           emailController.text.trim(),
                           passwordController.text.trim(),
                         );
-                        if (user != null) {
-                          Navigator.pushReplacementNamed(context, '/home');
-                        }
+                        // if (user != null) {
+                        //   Navigator.pushReplacementNamed(context, '/home');
+                        // }
                       } on Exception catch (e) {
                         String msg = 'Erro ao logar';
                         if (e is FirebaseAuthException) msg = e.message ?? msg;

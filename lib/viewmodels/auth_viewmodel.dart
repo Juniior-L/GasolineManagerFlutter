@@ -1,7 +1,9 @@
 // lib/viewmodels/auth_viewmodel.dart
 import 'dart:async';
+import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import '../data/services/auth_service.dart';
 
 class AuthViewModel extends ChangeNotifier {
@@ -57,12 +59,29 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> signOut() async {
-    await _authService.signOut();
-    // currentUser será atualizado pelo listener do stream quando o signOut acontecer,
-    // mas force a limpeza pra redundância
-    currentUser = null;
-    notifyListeners();
+  // Future<void> signOut() async {
+  //   currentUser = null;
+  //   await _authService.signOut();
+  //   notifyListeners();
+  // }
+
+  Future<void> signOut(BuildContext context) async {
+    try {
+      // Para o stream de abastecimentos antes de sair
+      final refuelVM = Navigator.of(context).mounted
+          ? context.read<RefuelViewmodel>()
+          : null;
+
+      refuelVM?.stopListening();
+
+      currentUser = null;
+      await _authService.signOut();
+      notifyListeners();
+
+      print("✅ Logout realizado e stream encerrado!");
+    } catch (e) {
+      print("Erro ao deslogar: $e");
+    }
   }
 
   @override

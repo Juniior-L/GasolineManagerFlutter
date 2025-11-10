@@ -1,6 +1,5 @@
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class NewVehiclePage extends StatefulWidget {
   const NewVehiclePage({super.key});
@@ -32,10 +31,22 @@ class _NewVehicleState extends State<NewVehiclePage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            TextFormField(controller: modelController),
-            TextFormField(controller: plateController),
-            TextFormField(controller: yearController),
-            TextFormField(controller: fuelTypeController),
+            TextFormField(
+              controller: modelController,
+              decoration: const InputDecoration(labelText: "Modelo"),
+            ),
+            TextFormField(
+              controller: plateController,
+              decoration: const InputDecoration(labelText: "Placa"),
+            ),
+            TextFormField(
+              controller: yearController,
+              decoration: const InputDecoration(labelText: "Ano"),
+            ),
+            TextFormField(
+              controller: fuelTypeController,
+              decoration: const InputDecoration(labelText: "Combustível"),
+            ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {

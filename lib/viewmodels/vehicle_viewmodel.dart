@@ -9,7 +9,7 @@ class VehicleViewmodel extends ChangeNotifier {
   bool loading = true;
 
   VehicleViewmodel() {
-    _dao.getVehicleStream().listen((data) {
+     _dao.getVehicleStream().listen((data) {
       list = data;
       loading = false;
       notifyListeners();
