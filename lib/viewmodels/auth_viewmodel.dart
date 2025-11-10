@@ -1,6 +1,7 @@
 // lib/viewmodels/auth_viewmodel.dart
 import 'dart:async';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
+import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -71,8 +72,14 @@ class AuthViewModel extends ChangeNotifier {
       final refuelVM = Navigator.of(context).mounted
           ? context.read<RefuelViewmodel>()
           : null;
+      // Para o stream de veiculos antes de sair
+      refuelVM?.stopListening();
+      final vehicleVM = Navigator.of(context).mounted
+          ? context.read<VehicleViewmodel>()
+          : null;
 
       refuelVM?.stopListening();
+      vehicleVM?.stopListening();
 
       currentUser = null;
       await _authService.signOut();

@@ -17,13 +17,6 @@ class RefuelViewmodel extends ChangeNotifier {
 
   RefuelViewmodel() {
     startListening();
-    // if (user != null || user!.isNotEmpty) {
-    //   _dao.getRefuelStream().listen((data) {
-    //     list = data;
-    //     loading = false;
-    //     notifyListeners();
-    //   });
-    // }
   }
 
   // Inicia o listener de abastecimentos

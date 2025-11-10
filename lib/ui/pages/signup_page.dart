@@ -1,4 +1,3 @@
-import 'package:atividade_prova/data/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../viewmodels/auth_viewmodel.dart';
@@ -17,7 +16,6 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthService authService = AuthService();
     final authVM = Provider.of<AuthViewModel>(context);
 
     return Scaffold(
