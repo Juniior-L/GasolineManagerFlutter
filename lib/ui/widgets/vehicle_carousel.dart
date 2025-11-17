@@ -13,26 +13,28 @@ class VehicleCarousel extends StatelessWidget {
     final vehicleVM = context.watch<VehicleViewmodel>();
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    String messageCarModel = " ";
+    String messageCarPlate = " ";
+    var v;
 
-    if (vehicleVM.loading || vehicleVM.list.isEmpty) {
-      return Container(
-        padding: const EdgeInsets.all(20),
-        child: Text(
-          "None vehicle yet",
-          style: theme.textTheme.titleMedium,
-        ),
-      );
+    if (vehicleVM.loading) {
+      messageCarModel = "Loading...";
+      messageCarPlate = "";
+    } else if (vehicleVM.list.isEmpty) {
+      messageCarModel = "None vehicle yet";
+      messageCarPlate = "Register your first vehicle!";
+    } else {
+      v = vehicleVM.selectedVehicle!;
+      messageCarModel = v.model;
+      messageCarPlate = v.plate;
     }
-
-    final v = vehicleVM.selectedVehicle!;
-
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
             AppTheme.primaryColor,
-            
+
             AppTheme.primaryColor.withOpacity(0.85),
             const Color(0xFF1F1F1F),
           ],
@@ -53,14 +55,14 @@ class VehicleCarousel extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                v.model,
+                messageCarModel,
                 style: theme.textTheme.titleLarge?.copyWith(
                   color: colors.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                v.plate,
+                messageCarPlate,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: colors.onPrimary.withOpacity(0.7),
                 ),
@@ -78,54 +80,54 @@ class VehicleCarousel extends StatelessWidget {
   }
 }
 
-// HEADER 
-  Widget _buildHeader(BuildContext context) {
-    final theme = Theme.of(context);
-    final colors = theme.colorScheme;
+// HEADER
+Widget _buildHeader(BuildContext context) {
+  final theme = Theme.of(context);
+  final colors = theme.colorScheme;
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppTheme.primaryColor,
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(20),
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        colors: [
+          AppTheme.primaryColor,
 
-            AppTheme.primaryColor.withOpacity(0.85),
-            const Color(0xFF1F1F1F),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(20),
-      ),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "November",
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: colors.onPrimary.withOpacity(0.8),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            "Expensives",
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: colors.onPrimary,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            "R\$ 496,58",
-            style: theme.textTheme.headlineMedium?.copyWith(
-              color: colors.secondary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          AppTheme.primaryColor.withOpacity(0.85),
+          const Color(0xFF1F1F1F),
         ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
       ),
-    );
-  }
+      borderRadius: BorderRadius.circular(20),
+    ),
+
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "November",
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: colors.onPrimary.withOpacity(0.8),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          "Expensives",
+          style: theme.textTheme.titleMedium?.copyWith(
+            color: colors.onPrimary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          "R\$ 496,58",
+          style: theme.textTheme.headlineMedium?.copyWith(
+            color: colors.secondary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    ),
+  );
+}
