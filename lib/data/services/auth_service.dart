@@ -1,3 +1,5 @@
+// ignore_for_file: unused_catch_clause
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -5,36 +7,38 @@ class AuthService {
 
   Stream<User?> get userChanges => _auth.authStateChanges();
 
-  // Login
+  // LOGIN
   Future signInWithEmailPassword(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print('Utilizador logado: ${userCredential.user?.uid}');
+      // print('Utilizador logado: ${userCredential.user?.uid}');
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      print('Erro de login: ${e.message}');
+      // print('Erro de login: ${e.message}');
+      rethrow;
     }
   }
 
-  // Criar conta
+  // SIGN UP
   Future createUserWithEmailPassword(String email, String password) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-      print('Utilizador criado: ${userCredential.user?.uid}');
+      // print('Utilizador criado: ${userCredential.user?.uid}');
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      print('Erro ao criar: ${e.message}');
+      // print('Erro ao criar: ${e.message}');
+      rethrow;
     }
   }
 
-  // Logout
+  // LOGOUT
   Future signOut() async {
     await _auth.signOut();
-    print('Utilizador deslogado.');
+    // print('Utilizador deslogado.');
   }
 
   User? get currentUser => _auth.currentUser;

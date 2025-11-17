@@ -9,21 +9,21 @@ class VehicleDao extends BaseDao {
     final ref = _vehicleRef;
     if (ref == null) return;
     await ref.push().set(v.toMap());
-    print("✅ Abastecimento salvo para o usuário ${userId}");
+    // print("✅ Abastecimento salvo para o usuário ${userId}");
   }
 
   Future<void> edit(String id, Vehicle v) async {
     final ref = _vehicleRef;
     if (ref == null) return;
     await ref.child(id).update(v.toMap());
-    print("✏️ Abastecimento $id atualizado!");
+    // print("✏️ Abastecimento $id atualizado!");
   }
 
   Future<void> remove(String id) async {
     final ref = _vehicleRef;
     if (ref == null) return;
     await ref.child(id).remove();
-    print("🗑️ Abastecimento $id removido!");
+    // print("🗑️ Abastecimento $id removido!");
   }
 
   Future<List<Vehicle>> show() async {
