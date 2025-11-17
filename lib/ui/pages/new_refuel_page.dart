@@ -1,6 +1,5 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, deprecated_member_use
 
-import 'package:atividade_prova/core/themes/theme.dart';
 import 'package:atividade_prova/utils/parse_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,12 +24,6 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
 
   String? selectedVehicleId;
 
-  final NumberFormat numberFormat = NumberFormat.decimalPattern('pt_BR');
-  final NumberFormat currencyFormat = NumberFormat.currency(
-    locale: 'pt_BR',
-    symbol: 'R\$',
-  );
-
   @override
   void dispose() {
     kilometersController.dispose();
@@ -47,146 +40,123 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
     final vehicleVM = context.watch<VehicleViewmodel>();
     final refuelVM = context.read<RefuelViewmodel>();
     final theme = Theme.of(context);
+    final colors = theme.colorScheme;
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: const Text("New Refuel"),
-        elevation: theme.appBarTheme.elevation,
-      ),
+      appBar: AppBar(title: const Text("New Refuel")),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
+            // HEADER
             Text(
               "Register Refuel",
               style: theme.textTheme.titleLarge?.copyWith(
-                color: theme.colorScheme.primary,
+                fontSize: 26,
+                fontWeight: FontWeight.w700,
+                color: colors.primary,
               ),
             ),
-            const SizedBox(height: 6),
-            Text(
-              "Fill the refuel information carefully.",
-              style: theme.textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 8),
+            Text("Fill the refuel details", style: theme.textTheme.bodyMedium),
+            const SizedBox(height: 28),
 
-            // Vehicle Dropdown
-            vehicleVM.loading
-                ? const Center(child: CircularProgressIndicator())
-                : Padding(
-                    padding: const EdgeInsets.only(bottom: 22),
-                    child: InputDecorator(
-                      decoration: InputDecoration(
-                        labelText: "Vehicle",
-                        prefixIcon: const Icon(Icons.directions_car_outlined),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          value: selectedVehicleId,
-                          hint: Text(
-                            "Select the vehicle",
-                            style: theme.inputDecorationTheme.hintStyle,
-                          ),
-                          icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                          isExpanded: true,
-                          borderRadius: BorderRadius.circular(14),
-                          items: vehicleVM.list
-                              .map(
-                                (v) => DropdownMenuItem(
-                                  value: v.id,
-                                  child: Text(
-                                    '${v.model} (${v.plate})',
-                                    style: theme.textTheme.bodyLarge?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (value) =>
-                              setState(() => selectedVehicleId = value),
-                        ),
-                      ),
-                    ),
+            // VEHICLE DROPDOWN
+            _glassContainer(
+              theme,
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: selectedVehicleId,
+                  isExpanded: true,
+                  icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                  hint: Text(
+                    "Select the vehicle",
+                    style: theme.textTheme.bodyMedium,
                   ),
+                  items: vehicleVM.list
+                      .map(
+                        (v) => DropdownMenuItem(
+                          value: v.id,
+                          child: Text("${v.model} (${v.plate})"),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) =>
+                      setState(() => selectedVehicleId = value),
+                ),
+              ),
+            ),
 
-            // Fields
-            _buildField(
+            const SizedBox(height: 16),
+
+            // INPUTS
+            _modernInput(
               label: "Current Km",
               controller: kilometersController,
-              icon: Icons.speed_outlined,
-              type: TextInputType.number,
               theme: theme,
+              icon: Icons.speed_rounded,
+              keyboardType: TextInputType.number,
             ),
-            _buildField(
+            _modernInput(
               label: "Gas Station",
               controller: gasStationController,
-              icon: Icons.local_gas_station_outlined,
               theme: theme,
+              icon: Icons.local_gas_station,
             ),
-            _buildField(
+            _modernInput(
               label: "Total Value (R\$)",
               controller: valueController,
-              icon: Icons.attach_money_outlined,
-              type: const TextInputType.numberWithOptions(decimal: true),
               theme: theme,
+              keyboardType: TextInputType.number,
+              icon: Icons.attach_money_rounded,
             ),
-            _buildField(
+            _modernInput(
               label: "Liters",
               controller: litersController,
-              icon: Icons.water_drop_outlined,
-              type: const TextInputType.numberWithOptions(decimal: true),
               theme: theme,
+              keyboardType: TextInputType.number,
+              icon: Icons.water_drop_rounded,
             ),
-            _buildDateField(context, theme),
-            _buildField(
+            _dateInput(theme, context),
+            _modernInput(
               label: "Notes",
               controller: noteController,
-              icon: Icons.note_outlined,
               theme: theme,
+              icon: Icons.note_alt_outlined,
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 28),
 
-            //Button
-            Center(
-              child: ElevatedButton.icon(
-                icon: const Icon(Icons.check_circle_outline, size: 22),
-                label: const Text("Save refuel"),
+            // BUTTON
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                child: const Text("Save Refuel"),
                 onPressed: () async {
                   if (selectedVehicleId == null ||
-                      kilometersController.text.trim().isEmpty ||
-                      gasStationController.text.trim().isEmpty ||
-                      valueController.text.trim().isEmpty ||
-                      litersController.text.trim().isEmpty ||
-                      dateController.text.trim().isEmpty) {
+                      kilometersController.text.isEmpty ||
+                      gasStationController.text.isEmpty ||
+                      valueController.text.isEmpty ||
+                      litersController.text.isEmpty ||
+                      dateController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text("Please fill all required fields!"),
-                        backgroundColor: theme.colorScheme.error,
-                      ),
+                      const SnackBar(content: Text("Fill all fields")),
                     );
                     return;
                   }
+
                   await refuelVM.save(
                     selectedVehicleId!,
                     parseNumber(kilometersController.text),
-                    gasStationController.text.trim(),
+                    gasStationController.text,
                     parseNumber(valueController.text),
                     parseNumber(litersController.text),
-                    dateController.text.trim(),
-                    noteController.text.trim(),
+                    dateController.text,
+                    noteController.text,
                   );
+
                   if (!mounted) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text("Refuel saved successfully!"),
-                      backgroundColor: theme.colorScheme.primary,
-                    ),
-                  );
                   Navigator.pop(context);
                 },
               ),
@@ -197,65 +167,97 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
     );
   }
 
-  //Reusable Text Field
-  Widget _buildField({
+  // MODERN INPUT CONTAINER
+  Widget _modernInput({
     required String label,
     required TextEditingController controller,
     required ThemeData theme,
-    TextInputType type = TextInputType.text,
-    IconData? icon,
+    required IconData icon,
+    TextInputType keyboardType = TextInputType.text,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 22),
-      child: TextField(
-        controller: controller,
-        keyboardType: type,
-        style: theme.textTheme.bodyLarge,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: icon != null ? Icon(icon) : null,
-          hintText: "Type the $label",
+      padding: const EdgeInsets.only(bottom: 16),
+      child: _glassContainer(
+        theme,
+        child: Row(
+          children: [
+            Icon(icon, color: theme.colorScheme.primary, size: 22),
+            const SizedBox(width: 12),
+            Expanded(
+              child: TextField(
+                controller: controller,
+                keyboardType: keyboardType,
+                decoration: InputDecoration(
+                  labelText: label,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  //Date Picker Field
-  Widget _buildDateField(BuildContext context, ThemeData theme) {
+  // DATE INPUT
+  Widget _dateInput(ThemeData theme, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 22),
-      child: TextField(
-        controller: dateController,
-        readOnly: true,
-        style: theme.textTheme.bodyLarge,
-        decoration: const InputDecoration(
-          labelText: "Date",
-          prefixIcon: Icon(Icons.calendar_today_outlined),
-          hintText: "Select the date",
-        ),
-        onTap: () async {
-          FocusScope.of(context).unfocus();
-          final DateTime? pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime(2000),
-            lastDate: DateTime.now(),
-            builder: (context, child) {
-              return Theme(
-                data: theme.copyWith(
-                  colorScheme: theme.colorScheme.copyWith(
-                    primary: AppTheme.primaryColor,
-                  ),
+      padding: const EdgeInsets.only(bottom: 16),
+      child: _glassContainer(
+        theme,
+        child: Row(
+          children: [
+            Icon(
+              Icons.calendar_month_rounded,
+              color: theme.colorScheme.primary,
+            ),
+            const SizedBox(width: 12),
+
+            Expanded(
+              child: TextField(
+                controller: dateController,
+                readOnly: true,
+                decoration: const InputDecoration(
+                  labelText: "Date",
+                  border: InputBorder.none,
                 ),
-                child: child ?? const SizedBox(),
-              );
-            },
-          );
-          if (pickedDate != null) {
-            dateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
-          }
-        },
+                onTap: () async {
+                  final date = await showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime.now(),
+                    initialDate: DateTime.now(),
+                  );
+
+                  if (date != null) {
+                    dateController.text = DateFormat("dd/MM/yyyy").format(date);
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  // EFFECT CONTAINER (modern glass-like)
+  Widget _glassContainer(ThemeData theme, {required Widget child}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface.withOpacity(0.9),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.black12.withOpacity(0.05)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12.withOpacity(0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: child,
     );
   }
 }

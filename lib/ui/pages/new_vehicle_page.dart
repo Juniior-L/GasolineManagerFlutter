@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
@@ -27,9 +29,18 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
   ];
 
   @override
+  void dispose() {
+    modelController.dispose();
+    plateController.dispose();
+    yearController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final vehicleVM = context.watch<VehicleViewmodel>();
+    final vehicleVM = context.read<VehicleViewmodel>();
     final theme = Theme.of(context);
+    final colors = theme.colorScheme;
 
     return Scaffold(
       appBar: AppBar(title: const Text("New Vehicle")),
@@ -41,47 +52,53 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
             // HEADER
             Text(
               "Register Vehicle",
-              style: theme.textTheme.titleLarge,
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: colors.primary,
+              ),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 6),
             Text(
               "Fill the information carefully.",
               style: theme.textTheme.bodyMedium,
             ),
-
-            const SizedBox(height: 30),
+            const SizedBox(height: 32),
 
             // INPUTS
-            _formField(
+            _modernInput(
               label: "Model",
               controller: modelController,
-              icon: Icons.directions_car_outlined,
+              theme: theme,
+              icon: Icons.directions_car_rounded,
             ),
 
-            _formField(
-              label: "Licence Plate",
+            _modernInput(
+              label: "License Plate",
               controller: plateController,
-              icon: Icons.credit_card_outlined,
+              theme: theme,
+              icon: Icons.credit_card_rounded,
               textCapitalization: TextCapitalization.characters,
             ),
 
-            _formField(
+            _modernInput(
               label: "Year",
               controller: yearController,
-              type: TextInputType.number,
-              icon: Icons.calendar_today_outlined,
+              theme: theme,
+              icon: Icons.calendar_month_rounded,
+              keyboardType: TextInputType.number,
             ),
 
-            // Fuel dropdown
-            _fuelDropdown(),
+            _fuelDropdown(theme),
 
             const SizedBox(height: 40),
 
-            // BOTÃO usando tema
-            Center(
+            // BUTTON
+            SizedBox(
+              width: double.infinity,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.check_circle_outline),
-                label: const Text("Save vehicle"),
+                label: const Text("Save Vehicle"),
                 onPressed: () async {
                   if (selectedFuelType == null ||
                       modelController.text.trim().isEmpty ||
@@ -105,14 +122,12 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
 
                   if (!mounted) return;
 
-                  // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Vehicle added successfully!"),
                     ),
                   );
 
-                  // ignore: use_build_context_synchronously
                   Navigator.pop(context);
                 },
               ),
@@ -123,48 +138,82 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
     );
   }
 
-  // ===== INPUT FIELD PADRONIZADO PELO TEMA =====
-  Widget _formField({
+  // INPUT FIELD
+
+  Widget _modernInput({
     required String label,
     required TextEditingController controller,
-    IconData? icon,
-    TextInputType type = TextInputType.text,
+    required ThemeData theme,
+    required IconData icon,
+    TextInputType keyboardType = TextInputType.text,
     TextCapitalization textCapitalization = TextCapitalization.none,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: TextField(
-        controller: controller,
-        keyboardType: type,
-        textCapitalization: textCapitalization,
-        decoration: InputDecoration(
-          labelText: label,
-          prefixIcon: icon != null ? Icon(icon) : null,
+      padding: const EdgeInsets.only(bottom: 18),
+      child: _glassContainer(
+        theme,
+        child: Row(
+          children: [
+            Icon(icon, size: 22, color: theme.colorScheme.primary),
+            const SizedBox(width: 14),
+            Expanded(
+              child: TextField(
+                controller: controller,
+                keyboardType: keyboardType,
+                textCapitalization: textCapitalization,
+                decoration: InputDecoration(
+                  labelText: label,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  // ===== DROPDOWN COM O TEMA =====
-  Widget _fuelDropdown() {
+  // DROPDOWN FIELD
+
+  Widget _fuelDropdown(ThemeData theme) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: DropdownButtonFormField<String>(
-        initialValue: selectedFuelType,
-        decoration: const InputDecoration(
-          labelText: "Fuel Type",
-          prefixIcon: Icon(Icons.local_gas_station_outlined),
+      padding: const EdgeInsets.only(bottom: 18),
+      child: _glassContainer(
+        theme,
+        child: DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            value: selectedFuelType,
+            isExpanded: true,
+            icon: const Icon(Icons.keyboard_arrow_down_rounded),
+            hint: Text("Fuel Type", style: theme.textTheme.bodyMedium),
+            items: fuelTypes
+                .map((fuel) => DropdownMenuItem(value: fuel, child: Text(fuel)))
+                .toList(),
+            onChanged: (value) => setState(() => selectedFuelType = value),
+          ),
         ),
-        items: fuelTypes
-            .map(
-              (fuel) => DropdownMenuItem(
-                value: fuel,
-                child: Text(fuel),
-              ),
-            )
-            .toList(),
-        onChanged: (value) => setState(() => selectedFuelType = value),
       ),
+    );
+  }
+
+  // GLASS CONTAINER
+
+  Widget _glassContainer(ThemeData theme, {required Widget child}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface.withOpacity(0.95),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.black12.withOpacity(0.05)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12.withOpacity(0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: child,
     );
   }
 }

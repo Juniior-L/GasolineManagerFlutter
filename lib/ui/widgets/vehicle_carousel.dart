@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use
-
-import 'package:atividade_prova/core/themes/theme.dart';
+import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +10,13 @@ class VehicleCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vehicleVM = context.watch<VehicleViewmodel>();
+    final refuelVM = context.watch<RefuelViewmodel>();
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     String messageCarModel = " ";
     String messageCarPlate = " ";
+    String messageCarExpensives = '';
+    // ignore: prefer_typing_uninitialized_variables
     var v;
 
     if (vehicleVM.loading) {
@@ -27,27 +29,26 @@ class VehicleCarousel extends StatelessWidget {
       v = vehicleVM.selectedVehicle!;
       messageCarModel = v.model;
       messageCarPlate = v.plate;
+      messageCarExpensives = refuelVM.getTotalMonth(v.id).toStringAsFixed(1);
     }
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            AppTheme.primaryColor,
-
-            AppTheme.primaryColor.withOpacity(0.85),
-            const Color(0xFF1F1F1F),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: colors.surface,
         borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: colors.shadow.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(1, 3),
+          ),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: colors.onPrimary),
+            icon: Icon(Icons.arrow_back_ios, color: colors.primary),
             onPressed: () => vehicleVM.previousVehicle(),
           ),
 
@@ -57,77 +58,31 @@ class VehicleCarousel extends StatelessWidget {
               Text(
                 messageCarModel,
                 style: theme.textTheme.titleLarge?.copyWith(
-                  color: colors.onPrimary,
+                  color: colors.primary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
                 messageCarPlate,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colors.onPrimary.withOpacity(0.7),
+                  color: colors.primary.withOpacity(0.7),
+                ),
+              ),
+              Text(
+                'R\$ $messageCarExpensives',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colors.primary.withOpacity(0.7),
                 ),
               ),
             ],
           ),
 
           IconButton(
-            icon: Icon(Icons.arrow_forward_ios, color: colors.onPrimary),
+            icon: Icon(Icons.arrow_forward_ios, color: colors.primary),
             onPressed: () => vehicleVM.nextVehicle(),
           ),
         ],
       ),
     );
   }
-}
-
-// HEADER
-Widget _buildHeader(BuildContext context) {
-  final theme = Theme.of(context);
-  final colors = theme.colorScheme;
-
-  return Container(
-    width: double.infinity,
-    padding: const EdgeInsets.all(20),
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          AppTheme.primaryColor,
-
-          AppTheme.primaryColor.withOpacity(0.85),
-          const Color(0xFF1F1F1F),
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-      borderRadius: BorderRadius.circular(20),
-    ),
-
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "November",
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: colors.onPrimary.withOpacity(0.8),
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          "Expensives",
-          style: theme.textTheme.titleMedium?.copyWith(
-            color: colors.onPrimary,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          "R\$ 496,58",
-          style: theme.textTheme.headlineMedium?.copyWith(
-            color: colors.secondary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    ),
-  );
 }

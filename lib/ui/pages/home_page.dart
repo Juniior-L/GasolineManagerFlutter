@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:atividade_prova/ui/widgets/chart.dart';
 import 'package:atividade_prova/ui/widgets/drawer.dart';
+import 'package:atividade_prova/ui/widgets/header.dart';
 import 'package:atividade_prova/ui/widgets/refuel_history.dart';
 import 'package:atividade_prova/ui/widgets/summary_cards.dart';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
@@ -51,6 +52,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const TopBanner(),
+            const SizedBox(height: 24),
             SummaryCards(),
             const SizedBox(height: 24),
             VehicleCarousel(),
