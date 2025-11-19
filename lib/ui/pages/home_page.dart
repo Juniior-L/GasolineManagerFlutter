@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:atividade_prova/ui/widgets/chart.dart';
 import 'package:atividade_prova/ui/widgets/drawer.dart';
 import 'package:atividade_prova/ui/widgets/header.dart';
@@ -24,6 +25,8 @@ class HomePage extends StatelessWidget {
 
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
+
     final selectedVehicle = vehicleVM.selectedVehicle;
 
     final List<FlSpot> spots = selectedVehicle == null
@@ -75,7 +78,7 @@ class HomePage extends StatelessWidget {
         children: [
           SpeedDialChild(
             child: const Icon(Icons.directions_car),
-            label: 'Add vehicle',
+            label: t.addVehicle,
             backgroundColor: colors.secondary,
             foregroundColor: colors.onSecondary,
             labelStyle: theme.textTheme.bodyMedium,
@@ -83,7 +86,7 @@ class HomePage extends StatelessWidget {
           ),
           SpeedDialChild(
             child: const Icon(Icons.local_gas_station),
-            label: 'Add refuel',
+            label: t.addRefuel,
             backgroundColor: colors.secondary,
             foregroundColor: colors.onSecondary,
             labelStyle: theme.textTheme.bodyMedium,

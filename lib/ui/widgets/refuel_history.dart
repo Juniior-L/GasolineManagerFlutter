@@ -1,3 +1,4 @@
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class FuelHistory extends StatelessWidget {
@@ -9,13 +10,14 @@ class FuelHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
 
     if (history.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 12),
           child: Text(
-            "None refuel yet 😴.",
+            t.noneRefuel,
             style: theme.textTheme.bodyMedium?.copyWith(
               color: colors.onSurfaceVariant,
             ),
@@ -28,7 +30,7 @@ class FuelHistory extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Refuel history",
+          t.refuelHistory,
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.bold,
           ),

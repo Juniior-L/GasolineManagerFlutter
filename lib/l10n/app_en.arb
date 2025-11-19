@@ -1,0 +1,110 @@
+{
+  "@@locale": "en",
+  "welcomeMessage": "Welcome back!",
+  "myVehicles": "My vehicles",
+  "registerRefuel": "Register refuel",
+  "refuelHistory": "Refuel history",
+  "language": "Language",
+  "logout": "Log Out",
+
+  "monthOverview": "{month} Overview",
+  "@monthOverview": {
+    "placeholders": { "month": {} }
+  },
+
+  "yourFuelBalance": "Your fuel balance",
+
+  "thisMonth": "This month",
+  "vehicle": "Vehicle",
+  "selectOne": "Select one",
+
+  "noneRefuel": "None refuel yet 😴.",
+  "refuelHistory": "Refuel history",
+
+  "refuels": "Refuels",
+  "totalKm": "Total kilometers",
+  "kmPerLiter": "Km/L average",
+
+  "loading": "Loading...",
+  "noneVehicle": "None vehicle yet",
+  "registerFirstVehicle": "Register your first vehicle!",
+
+  "emptyGraph": "Empty graph, refuel your car first.",
+  "monthExpensives": "Month expensives",
+
+  "addVehicle": "Add vehicle",
+  "addRefuel": "Add refuel",
+
+  "password": "Password",
+  "errorLogin": "Error on Login",
+  "userNotFound": "user-not-found",
+  "wrongPassword": "wrong-password",
+  "invalidCredential": "invalid-credential",
+  "emailIncorrect": "Email or password incorrect.",
+  "invalidEmail": "invalid-email",
+  "fillFields": "Fill the fields",
+  "login": "Log In",
+  "createAccount": "Create an account",
+
+  "editRefuel": "Edit refuel",
+  "deleteRefuel": "Delete refuel",
+  "confirmDelete": "Are you sure you want to delete?",
+  "yesDelete": "Yes, delete",
+  "cancel": "Cancel",
+
+  "details": "Details",
+  "gasStation": "Gas station",
+  "liters": "Liters",
+  "odometer": "Odometer",
+  "notes": "Notes",
+  "vehicleRemoved": "Vehicle removed",
+
+  "add": "Add",
+  "save": "Save",
+  "update": "Update",
+  "success": "Success",
+  "operationSuccess": "Operation completed successfully!",
+  "operationFailed": "Operation failed",
+  "error": "Error",
+
+  "editVehicle": "Edit vehicle",
+  "deleteVehicle": "Delete vehicle",
+  "vehicleSaved": "Vehicle saved successfully!",
+  "vehicleDeleted": "Vehicle deleted successfully!",
+
+  "selectVehicle": "Select the vehicle",
+  "fuelType": "Fuel type",
+  "year": "Year",
+
+  "dashboard": "Dashboard",
+  "statistics": "Statistics",
+  "noData": "No data available",
+  "lastRefuels": "Last refuels",
+  "expense": "Expense",
+  "expenses": "Expenses",
+  "average": "Average",
+
+  "myRefuels": "My refuels",
+  "trackFuelHistory": "Track your fuel history easily ⛽",
+  "noRefuels": "No refuels yet ⛽",
+  "delete": "Delete",
+  "refuelRemoved": "Refuel removed successfully!",
+  "edit": "Edit",
+
+  "fillDetailsRegister": "Fill in your details to register",
+  "errorCreate": "Error on Creating account",
+  "emailInUse": "This email is already in use. Try logging in.",
+  "passwordMinimo": "Password must be at least 6 characters.",
+  "signup": "Sign Up",
+  "backLogin": "Back to login",
+
+  "myVehicles": "My vehicles",
+  "takeCareVehicles": "Take care of all your vehicles",
+  "noneVehicle": "None vehicles yet 🚗",
+
+  "date" : "date",
+  "fillCarefull": "Fill the information carefully.",
+  "model": "Model",
+  "licensePlate": "License Plate"
+
+}

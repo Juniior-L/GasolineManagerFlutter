@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:ui';
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class TopBanner extends StatelessWidget {
     final vehicleVM = context.watch<VehicleViewmodel>();
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
 
     final v = vehicleVM.selectedVehicle;
     final now = DateTime.now();
@@ -68,7 +70,7 @@ class TopBanner extends StatelessWidget {
               children: [
                 // Month label
                 Text(
-                  "$monthName Overview",
+                  t.monthOverview(monthName),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: colors.onPrimary.withOpacity(0.8),
                   ),
@@ -77,7 +79,7 @@ class TopBanner extends StatelessWidget {
 
                 // TITLE
                 Text(
-                  "Your fuel balance",
+                  t.yourFuelBalance,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     color: colors.onPrimary,
                     fontWeight: FontWeight.bold,
@@ -92,14 +94,14 @@ class TopBanner extends StatelessWidget {
                   children: [
                     _stat(
                       context,
-                      label: "This month",
+                      label: t.thisMonth,
                       value: "R\$ ${totalMonth.toStringAsFixed(2)}",
                       icon: Icons.attach_money,
                     ),
                     _stat(
                       context,
-                      label: "Vehicle",
-                      value: v?.model ?? "Select one",
+                      label: t.vehicle,
+                      value: v?.model ?? t.selectOne,
                       icon: Icons.directions_car,
                     ),
                   ],

@@ -1,4 +1,5 @@
 import 'package:atividade_prova/core/themes/theme.dart';
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:atividade_prova/ui/pages/new_refuel_page.dart';
 import 'package:atividade_prova/ui/pages/new_vehicle_page.dart';
 import 'package:atividade_prova/ui/pages/refuel_page.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'ui/pages/login_page.dart';
 import 'ui/pages/signup_page.dart';
@@ -22,8 +24,26 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(newLocale);
+  }
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('en'); // idioma padrão
+
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +55,19 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Gestor de Abastecimento',
+        title: 'GasTrack',
         theme: AppTheme.lightTheme,
+        locale: _locale, // ← agora o idioma troca!
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('pt'),
+        ],
         home: const AuthWrapper(),
         routes: {
           '/login': (_) => const LoginPage(),

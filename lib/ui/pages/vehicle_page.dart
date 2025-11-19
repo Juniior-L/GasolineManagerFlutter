@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +15,11 @@ class VehicleListPage extends StatelessWidget {
     final vehicleVm = Provider.of<VehicleViewmodel>(context);
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: colors.surface,
-      appBar: AppBar(title: const Text('My vehicles')),
+      appBar: AppBar(title: Text(t.myVehicles)),
       body: Column(
         children: [
           // HEADER
@@ -32,7 +34,7 @@ class VehicleListPage extends StatelessWidget {
               ),
             ),
             child: Text(
-              'Take care of all your vehicles',
+              t.takeCareVehicles,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: colors.onPrimary,
                 fontWeight: FontWeight.w500,
@@ -48,7 +50,7 @@ class VehicleListPage extends StatelessWidget {
             child: vehicleVm.list.isEmpty
                 ? Center(
                     child: Text(
-                      'None vehicles yet 🚗',
+                      t.noneVehicle,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colors.onSurface.withOpacity(0.6),
                       ),
@@ -79,7 +81,7 @@ class VehicleListPage extends StatelessWidget {
         children: [
           SpeedDialChild(
             child: const Icon(Icons.directions_car_rounded),
-            label: 'Add vehicle',
+            label: t.addVehicle,
             backgroundColor: colors.secondary,
             foregroundColor: colors.onSecondary,
             labelStyle: theme.textTheme.bodyMedium?.copyWith(
@@ -97,7 +99,7 @@ class VehicleListPage extends StatelessWidget {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final vehicleVm = Provider.of<VehicleViewmodel>(context, listen: false);
-
+    final t = AppLocalizations.of(context)!;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 2,
@@ -163,8 +165,8 @@ class VehicleListPage extends StatelessWidget {
                         vehicleVm.remove(vehicle.id!);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: const Text(
-                              "Vehicle Removed successfully!",
+                            content: Text(
+                              t.vehicleRemoved,
                             ),
                             backgroundColor: const Color(0xFFEF5350),
                             behavior: SnackBarBehavior.floating,
@@ -182,7 +184,7 @@ class VehicleListPage extends StatelessWidget {
                           children: [
                             Icon(Icons.edit_rounded, color: colors.primary),
                             const SizedBox(width: 8),
-                            const Text('Edit'),
+                            Text(t.edit),
                           ],
                         ),
                       ),
@@ -195,7 +197,7 @@ class VehicleListPage extends StatelessWidget {
                               color: Colors.redAccent,
                             ),
                             const SizedBox(width: 8),
-                            const Text('Delete'),
+                            Text(t.delete),
                           ],
                         ),
                       ),
@@ -207,7 +209,7 @@ class VehicleListPage extends StatelessWidget {
               const SizedBox(height: 14),
 
               // INFOS
-              _buildInfoRow(context, 'Fuel type', vehicle.fueltype),
+              _buildInfoRow(context, t.fuelType, vehicle.fueltype),
               const SizedBox(height: 4),
               _buildInfoRow(
                 context,

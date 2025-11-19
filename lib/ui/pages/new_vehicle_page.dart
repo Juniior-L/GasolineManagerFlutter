@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
@@ -41,9 +42,10 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
     final vehicleVM = context.read<VehicleViewmodel>();
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("New Vehicle")),
+      appBar: AppBar(title: Text(t.addVehicle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 26),
         child: Column(
@@ -51,7 +53,7 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
           children: [
             // HEADER
             Text(
-              "Register Vehicle",
+              t.addVehicle,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
@@ -60,21 +62,21 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
             ),
             const SizedBox(height: 6),
             Text(
-              "Fill the information carefully.",
+              t.fillCarefull,
               style: theme.textTheme.bodyMedium,
             ),
             const SizedBox(height: 32),
 
             // INPUTS
             _modernInput(
-              label: "Model",
+              label: t.model,
               controller: modelController,
               theme: theme,
               icon: Icons.directions_car_rounded,
             ),
 
             _modernInput(
-              label: "License Plate",
+              label: t.licensePlate,
               controller: plateController,
               theme: theme,
               icon: Icons.credit_card_rounded,
@@ -82,7 +84,7 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
             ),
 
             _modernInput(
-              label: "Year",
+              label: t.year,
               controller: yearController,
               theme: theme,
               icon: Icons.calendar_month_rounded,
@@ -98,7 +100,7 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
               width: double.infinity,
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.check_circle_outline),
-                label: const Text("Save Vehicle"),
+                label: Text(t.save),
                 onPressed: () async {
                   if (selectedFuelType == null ||
                       modelController.text.trim().isEmpty ||
@@ -106,7 +108,7 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
                       yearController.text.trim().isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: const Text("Fill all the fields!"),
+                        content: Text(t.fillFields),
                         backgroundColor: theme.colorScheme.error,
                       ),
                     );
@@ -123,8 +125,8 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
                   if (!mounted) return;
 
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Vehicle added successfully!"),
+                    SnackBar(
+                      content: Text(t.vehicleSaved),
                     ),
                   );
 
@@ -176,6 +178,8 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
   // DROPDOWN FIELD
 
   Widget _fuelDropdown(ThemeData theme) {
+    final t = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: _glassContainer(
@@ -185,7 +189,7 @@ class _NewVehiclePageState extends State<NewVehiclePage> {
             value: selectedFuelType,
             isExpanded: true,
             icon: const Icon(Icons.keyboard_arrow_down_rounded),
-            hint: Text("Fuel Type", style: theme.textTheme.bodyMedium),
+            hint: Text(t.fuelType, style: theme.textTheme.bodyMedium),
             items: fuelTypes
                 .map((fuel) => DropdownMenuItem(value: fuel, child: Text(fuel)))
                 .toList(),

@@ -1,0 +1,108 @@
+{
+  "@@locale": "pt",
+  "welcomeMessage": "Bem-vindo de volta!",
+  "myVehicles": "Meus veículos",
+  "registerRefuel": "Registrar abastecimento",
+  "refuelHistory": "Histórico de abastecimentos",
+  "language": "Idioma",
+  "logout": "Sair",
+  "monthOverview": "Resumo de {month}",
+  "@monthOverview": {
+    "placeholders": { "month": {} }
+  },
+
+  "yourFuelBalance": "Seu balanço de combustível",
+
+  "thisMonth": "Este mês",
+  "vehicle": "Veículo",
+  "selectOne": "Selecione um",
+
+  "noneRefuel": "Nenhum abastecimento ainda 😴.",
+  "refuelHistory": "Histórico de abastecimentos",
+
+  "refuels": "Abastecimentos",
+  "totalKm": "Total de Km",
+  "kmPerLiter": "Média Km/L",
+
+  "loading": "Carregando...",
+  "noneVehicle": "Nenhum veículo ainda",
+  "registerFirstVehicle": "Cadastre seu primeiro veículo!",
+
+  "emptyGraph": "Gráfico vazio, faça um abastecimento.",
+  "monthExpensives": "Despesas do mês",
+
+  "addVehicle": "Adicione veículo",
+  "addRefuel": "Adicione abastecimento",
+  
+  "password": "Senha",
+  "errorLogin": "Erro ao fazer login",
+  "userNotFound": "Usuário não encontrado",
+  "wrongPassword": "Senha incorreta",
+  "invalidCredential": "Credencial inválida",
+  "emailIncorrect": "Email ou senha incorretos.",
+  "invalidEmail": "Email inválido",
+  "fillFields": "Preencha os campos",
+  "login": "Entrar",
+  "createAccount": "Criar conta",
+
+  "editRefuel": "Editar abastecimento",
+  "deleteRefuel": "Excluir abastecimento",
+  "confirmDelete": "Tem certeza que deseja excluir?",
+  "yesDelete": "Sim, excluir",
+  "cancel": "Cancelar",
+
+  "details": "Detalhes",
+  "gasStation": "Posto",
+  "liters": "Litros",
+  "odometer": "Odômetro",
+  "notes": "Observações",
+  "vehicleRemoved": "Veículo removido",
+
+  "add": "Adicionar",
+  "save": "Salvar",
+  "update": "Atualizar",
+  "success": "Sucesso",
+  "operationSuccess": "Operação realizada com sucesso!",
+  "operationFailed": "Falha na operação",
+  "error": "Erro",
+
+  "editVehicle": "Editar veículo",
+  "deleteVehicle": "Excluir veículo",
+  "vehicleSaved": "Veículo salvo com sucesso!",
+  "vehicleDeleted": "Veículo excluído com sucesso!",
+
+  "selectVehicle": "Selecione o veículo",
+  "fuelType": "Tipo de combustível",
+  "year": "Ano",
+
+  "dashboard": "Painel",
+  "statistics": "Estatísticas",
+  "noData": "Sem dados disponíveis",
+  "lastRefuels": "Últimos abastecimentos",
+  "expense": "Despesa",
+  "expenses": "Despesas",
+  "average": "Média",
+
+  "myRefuels": "Meus abastecimentos",
+  "trackFuelHistory": "Controle seu histórico ⛽",
+  "noRefuels": "Nenhum abastecimento ainda ⛽",
+  "delete": "Deletar",
+  "refuelRemoved": "Abastecimento removido com sucesso",
+  "edit": "Editar",
+
+  "fillDetailsRegister": "Preencha os detalhes primeiro",
+  "errorCreate": "Erro ao criar conta",
+  "emailInUse": "Este email já está em uso. Tente fazer Login.",
+  "passwordMinimo": "Senha precisa ter no mínimo 6 caracteres",
+  "signup": "Registrar",
+  "backLogin": "Voltar ao login",
+
+  "myVehicles": "Meus veículos",
+  "takeCareVehicles": "Cuide de todos os seus veículos",
+  "noneVehicle": "Nenhum veículo cadastrado ainda 🚗",
+
+  "date" : "data",
+  "fillCarefull": "Preencha as informações com cuidado.",
+  "model": "Modelo",
+  "licensePlate": "Placa"
+}

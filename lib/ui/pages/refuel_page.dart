@@ -1,4 +1,5 @@
 import 'package:atividade_prova/data/models/refuel_model.dart';
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,11 @@ class RefuelListPage extends StatelessWidget {
     final refuelVm = Provider.of<RefuelViewmodel>(context);
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
+
 
     return Scaffold(
-      appBar: AppBar(title: const Text('My Refuels')),
+      appBar: AppBar(title: Text(t.myRefuels)),
 
       body: Column(
         children: [
@@ -31,7 +34,7 @@ class RefuelListPage extends StatelessWidget {
               ),
             ),
             child: Text(
-              'Track your fuel history easily ⛽',
+              t.trackFuelHistory,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: colors.onPrimary,
               ),
@@ -46,7 +49,7 @@ class RefuelListPage extends StatelessWidget {
             child: refuelVm.list.isEmpty
                 ? Center(
                     child: Text(
-                      'No refuels yet ⛽',
+                      t.noRefuels,
                       style: theme.textTheme.bodyMedium,
                     ),
                   )
@@ -77,7 +80,7 @@ class RefuelListPage extends StatelessWidget {
         children: [
           SpeedDialChild(
             child: const Icon(Icons.local_gas_station_rounded),
-            label: 'Add refuel',
+            label: t.addRefuel,
             backgroundColor: colors.secondary,
             foregroundColor: colors.onSecondary,
             labelStyle: theme.textTheme.bodyMedium,
@@ -94,6 +97,7 @@ class RefuelListPage extends StatelessWidget {
     final colors = theme.colorScheme;
     final vehicleVM = context.watch<VehicleViewmodel>();
     final v = vehicleVM.vehicleModel(refuel.vehicleId!);
+    final t = AppLocalizations.of(context)!;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -152,8 +156,8 @@ class RefuelListPage extends StatelessWidget {
                       ).remove(refuel.id!);
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Refuel removed successfully!"),
+                        SnackBar(
+                          content: Text(t.refuelRemoved),
                         ),
                       );
                     }
@@ -165,7 +169,7 @@ class RefuelListPage extends StatelessWidget {
                         children: [
                           Icon(Icons.edit_rounded, color: colors.primary),
                           const SizedBox(width: 8),
-                          const Text('Edit'),
+                          Text(t.edit),
                         ],
                       ),
                     ),
@@ -175,7 +179,7 @@ class RefuelListPage extends StatelessWidget {
                         children: [
                           Icon(Icons.delete_rounded, color: colors.error),
                           const SizedBox(width: 8),
-                          const Text('Delete'),
+                           Text(t.delete),
                         ],
                       ),
                     ),
@@ -187,20 +191,20 @@ class RefuelListPage extends StatelessWidget {
             const SizedBox(height: 14),
 
             // INFOS
-            _buildInfoRow(context, 'Gas station', refuel.gasStation),
-            _buildInfoRow(context, 'Liters', refuel.liters.toStringAsFixed(2)),
-            _buildInfoRow(context, 'Odometer', '${refuel.kilometers} km'),
+            _buildInfoRow(context, t.gasStation, refuel.gasStation),
+            _buildInfoRow(context, t.liters, refuel.liters.toStringAsFixed(2)),
+            _buildInfoRow(context, t.odometer, '${refuel.kilometers} km'),
             _buildInfoRow(
               context,
-              'Vehicle',
-              v == null ? 'Vehicle removed' : '${v.model} • ${v.plate}',
+              t.vehicle,
+              v == null ? t.vehicleRemoved : '${v.model} • ${v.plate}',
             ),
 
             if (refuel.note.isNotEmpty) ...[
               const SizedBox(height: 6),
               _buildInfoRow(
                 context,
-                'Note',
+                t.notes,
                 refuel.note,
                 highlight: true,
                 icon: Icons.sticky_note_2_outlined,

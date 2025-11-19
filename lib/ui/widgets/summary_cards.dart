@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -15,21 +16,22 @@ class SummaryCards extends StatelessWidget {
     final refuelVM = context.watch<RefuelViewmodel>();
     final vehicleVM = context.watch<VehicleViewmodel>();
     final selectedVehicle = vehicleVM.selectedVehicle;
+    final t = AppLocalizations.of(context)!;
 
     final items = [
       {
         "icon": Icons.local_gas_station,
-        "title": "Refuels",
+        "title": t.refuels,
         "value": refuelVM.getByVehicle(selectedVehicle?.id ?? "").length,
       },
       {
         "icon": Icons.attach_money,
-        "title": "Total kilometers",
+        "title": t.totalKm,
         "value": refuelVM.totalKm(selectedVehicle?.id).toStringAsFixed(1),
       },
       {
         "icon": Icons.speed,
-        "title": "Km/L average",
+        "title": t.kmPerLiter,
         "value": refuelVM.avgKmPerLiter(selectedVehicle?.id).toStringAsFixed(1),
       },
     ];

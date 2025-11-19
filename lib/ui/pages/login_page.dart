@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,12 +17,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  
 
   @override
   Widget build(BuildContext context) {
     final authVM = Provider.of<AuthViewModel>(context);
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
+
 
     if (authVM.currentUser != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -75,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    "Welcome back 👋",
+                    t.welcomeMessage,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: AppTheme.textSecondary,
                     ),
@@ -93,9 +97,9 @@ class _LoginPageState extends State<LoginPage> {
                   TextField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: "Password",
-                      prefixIcon: Icon(Icons.lock_outline),
+                    decoration: InputDecoration(
+                      labelText: t.password,
+                      prefixIcon: const Icon(Icons.lock_outline),
                     ),
                   ),
                   const SizedBox(height: 28),
@@ -109,16 +113,16 @@ class _LoginPageState extends State<LoginPage> {
                                 passwordController.text.trim(),
                               );
                             } on Exception catch (e) {
-                              String msg = 'Error on Login';
+                              String msg = t.errorLogin;
                               if (e is FirebaseAuthException) {
                                 if (e.code == 'user-not-found' ||
                                     e.code == 'wrong-password' ||
                                     e.code == 'invalid-credential') {
-                                  msg = 'Email or password incorrect.';
+                                  msg = t.emailIncorrect;
                                 } else if (e.code == 'invalid-email') {
-                                  msg = 'Invalid email.';
+                                  msg = t.invalidEmail;
                                 } else {
-                                  msg = 'Fill the fields';
+                                  msg = t.fillFields;
                                 }
                               }
                               ScaffoldMessenger.of(
@@ -127,12 +131,12 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           },
                           icon: const Icon(Icons.login_rounded),
-                          label: const Text("Log In"),
+                          label: Text(t.login),
                         ),
                   const SizedBox(height: 24),
                   TextButton(
                     onPressed: () => Navigator.pushNamed(context, '/signup'),
-                    child: const Text("Create an account"),
+                    child: Text(t.createAccount),
                   ),
                 ],
               ),

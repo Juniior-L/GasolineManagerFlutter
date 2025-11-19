@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -15,13 +16,14 @@ class RefuelChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+     final t = AppLocalizations.of(context)!;
 
     if (spots.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-            "Empty graph, refuel your car first.",
+            t.emptyGraph,
             style: theme.textTheme.bodyMedium,
           ),
         ),
@@ -46,7 +48,7 @@ class RefuelChart extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Month expensives",
+            t.monthExpensives,
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),

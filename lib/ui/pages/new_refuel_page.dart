@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, deprecated_member_use
 
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:atividade_prova/utils/parse_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -41,9 +42,11 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
     final refuelVM = context.read<RefuelViewmodel>();
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
+
 
     return Scaffold(
-      appBar: AppBar(title: const Text("New Refuel")),
+      appBar: AppBar(title: Text(t.addRefuel)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Column(
@@ -51,7 +54,7 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
           children: [
             // HEADER
             Text(
-              "Register Refuel",
+              t.registerRefuel,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontSize: 26,
                 fontWeight: FontWeight.w700,
@@ -59,7 +62,7 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
               ),
             ),
             const SizedBox(height: 8),
-            Text("Fill the refuel details", style: theme.textTheme.bodyMedium),
+            Text(t.fillCarefull, style: theme.textTheme.bodyMedium),
             const SizedBox(height: 28),
 
             // VEHICLE DROPDOWN
@@ -71,7 +74,7 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
                   isExpanded: true,
                   icon: const Icon(Icons.keyboard_arrow_down_rounded),
                   hint: Text(
-                    "Select the vehicle",
+                    t.selectVehicle,
                     style: theme.textTheme.bodyMedium,
                   ),
                   items: vehicleVM.list
@@ -92,14 +95,14 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
 
             // INPUTS
             _modernInput(
-              label: "Current Km",
+              label: t.odometer,
               controller: kilometersController,
               theme: theme,
               icon: Icons.speed_rounded,
               keyboardType: TextInputType.number,
             ),
             _modernInput(
-              label: "Gas Station",
+              label: t.gasStation,
               controller: gasStationController,
               theme: theme,
               icon: Icons.local_gas_station,
@@ -112,7 +115,7 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
               icon: Icons.attach_money_rounded,
             ),
             _modernInput(
-              label: "Liters",
+              label: t.liters,
               controller: litersController,
               theme: theme,
               keyboardType: TextInputType.number,
@@ -120,7 +123,7 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
             ),
             _dateInput(theme, context),
             _modernInput(
-              label: "Notes",
+              label: t.notes,
               controller: noteController,
               theme: theme,
               icon: Icons.note_alt_outlined,
@@ -132,7 +135,7 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                child: const Text("Save Refuel"),
+                child: Text(t.save),
                 onPressed: () async {
                   if (selectedVehicleId == null ||
                       kilometersController.text.isEmpty ||
@@ -141,7 +144,7 @@ class _NewRefuelPageState extends State<NewRefuelPage> {
                       litersController.text.isEmpty ||
                       dateController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Fill all fields")),
+                      SnackBar(content: Text(t.fillFields)),
                     );
                     return;
                   }

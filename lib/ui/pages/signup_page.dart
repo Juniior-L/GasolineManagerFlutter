@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class _SignupPageState extends State<SignupPage> {
     final authVM = Provider.of<AuthViewModel>(context);
     final colors = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final t = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: colors.surface,
@@ -61,7 +63,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    "Create Account",
+                    t.createAccount,
                     style: textTheme.titleLarge?.copyWith(
                       color: colors.primary,
                       fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Fill in your details to register",
+                    t.fillCarefull,
                     style: textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 32),
@@ -85,9 +87,9 @@ class _SignupPageState extends State<SignupPage> {
                   TextField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: "Password",
-                      prefixIcon: Icon(Icons.lock_outline),
+                    decoration: InputDecoration(
+                      labelText: t.password,
+                      prefixIcon: const Icon(Icons.lock_outline),
                     ),
                   ),
                   const SizedBox(height: 28),
@@ -109,18 +111,18 @@ class _SignupPageState extends State<SignupPage> {
                                 Navigator.pop(context);
                               }
                             } on Exception catch (e) {
-                              String msg = 'Error on Creating account';
+                              String msg = t.errorCreate;
                               if (e is FirebaseAuthException) {
                                 if (e.code == 'email-already-in-use') {
                                   msg =
-                                      'This email is already in use. Try logging in.';
+                                      t.emailInUse;
                                 } else if (e.code == 'invalid-email') {
-                                  msg = 'Invalid email format.';
+                                  msg = t.invalidEmail;
                                 } else if (e.code == 'weak-password') {
                                   msg =
-                                      'Password must be at least 6 characters.';
+                                      t.passwordMinimo;
                                 } else {
-                                  msg = 'Fill the fields.';
+                                  msg = t.fillFields;
                                 }
                               }
 
@@ -130,12 +132,12 @@ class _SignupPageState extends State<SignupPage> {
                             }
                           },
                           icon: const Icon(Icons.check_circle_outline),
-                          label: const Text("Sign Up"),
+                          label: Text(t.signup),
                         ),
                   const SizedBox(height: 24),
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text("Back to Login"),
+                    child: Text(t.backLogin),
                   ),
                 ],
               ),

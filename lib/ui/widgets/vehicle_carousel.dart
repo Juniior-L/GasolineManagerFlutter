@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+import 'package:atividade_prova/l10n/app_localizations.dart';
 import 'package:atividade_prova/viewmodels/refuel_viewmodel.dart';
 import 'package:atividade_prova/viewmodels/vehicle_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class VehicleCarousel extends StatelessWidget {
     final refuelVM = context.watch<RefuelViewmodel>();
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
+    final t = AppLocalizations.of(context)!;
     String messageCarModel = " ";
     String messageCarPlate = " ";
     String messageCarExpensives = '';
@@ -20,11 +22,11 @@ class VehicleCarousel extends StatelessWidget {
     var v;
 
     if (vehicleVM.loading) {
-      messageCarModel = "Loading...";
+      messageCarModel = t.loading;
       messageCarPlate = "";
     } else if (vehicleVM.list.isEmpty) {
-      messageCarModel = "None vehicle yet";
-      messageCarPlate = "Register your first vehicle!";
+      messageCarModel = t.noneVehicle;
+      messageCarPlate = t.registerFirstVehicle;
     } else {
       v = vehicleVM.selectedVehicle!;
       messageCarModel = v.model;
